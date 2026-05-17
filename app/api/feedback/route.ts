@@ -43,7 +43,7 @@ Hãy viết feedback ngắn gọn bằng tiếng Việt (3-5 câu), bao gồm:
 
 Chỉ viết feedback, không cần tiêu đề hay danh sách.`;
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
     const result = await model.generateContent(prompt);
     const feedback = result.response.text();
 

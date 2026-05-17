@@ -19,21 +19,11 @@ export async function POST(request: NextRequest) {
 
     const audioBuffer = Buffer.from(await audio.arrayBuffer());
 
-    // Lấy access token từ Azure
-    const tokenRes = await fetch(
-      `https://${region}.api.cognitive.microsoft.com/sts/v1.0/issueToken`,
-      { method: 'POST', headers: { 'Ocp-Apim-Subscription-Key': key } }
-    );
-    if (!tokenRes.ok) throw new Error('Failed to get Azure token');
-    const token = await tokenRes.text();
-
-    // Pronunciation Assessment qua REST API
     const pronunciationConfig = JSON.stringify({
       ReferenceText: referenceText,
       GradingSystem: 'HundredMark',
       Granularity: 'Phoneme',
       EnableMiscue: true,
-      EnableProsodyAssessment: true,
     });
     const pronunciationConfigB64 = Buffer.from(pronunciationConfig).toString('base64');
 
@@ -42,7 +32,7 @@ export async function POST(request: NextRequest) {
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Ocp-Apim-Subscription-Key': key,
           'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
           'Pronunciation-Assessment': pronunciationConfigB64,
         },
@@ -50,47 +40,58 @@ export async function POST(request: NextRequest) {
       }
     );
 
+    const rawText = await speechRes.text();
     if (!speechRes.ok) {
-      const errText = await speechRes.text();
-      throw new Error(`Azure STT error: ${errText}`);
+      throw new Error(`Azure STT error ${speechRes.status}: ${rawText}`);
     }
 
-    const speechJson = await speechRes.json();
+    const speechJson = JSON.parse(rawText);
     const nBest = speechJson?.NBest?.[0];
 
     if (!nBest) {
       return NextResponse.json({ error: 'No recognition result' }, { status: 422 });
     }
 
-    const pa = nBest.PronunciationAssessment;
+    // Azure REST API trả về flat format: scores nằm thẳng trên object, không phải trong PronunciationAssessment
+    const words: AzureWord[] = nBest.Words ?? [];
+    const spokenWords = words.filter((w) => w.Duration > 0);
+    const totalWords = words.length;
+
+    const accuracyScore = nBest.AccuracyScore ?? 0;
+    const fluencyScore = nBest.FluencyScore ?? accuracyScore;
+    const completenessScore = nBest.CompletenessScore ??
+      (totalWords > 0 ? Math.round((spokenWords.length / totalWords) * 100) : 0);
+    const prosodyScore = nBest.PronScore ?? accuracyScore;
+
     return NextResponse.json({
-      accuracyScore: pa?.AccuracyScore ?? 0,
-      fluencyScore: pa?.FluencyScore ?? 0,
-      completenessScore: pa?.CompletenessScore ?? 0,
-      prosodyScore: pa?.ProsodyScore ?? 0,
-      words: (nBest.Words ?? []).map((w: AzureWord) => ({
+      accuracyScore,
+      fluencyScore,
+      completenessScore,
+      prosodyScore,
+      words: words.map((w) => ({
         word: w.Word,
-        accuracyScore: w.PronunciationAssessment?.AccuracyScore ?? 0,
-        errorType: w.PronunciationAssessment?.ErrorType ?? 'None',
-        phonemes: (w.Phonemes ?? []).map((p: AzurePhoneme) => ({
+        accuracyScore: w.AccuracyScore ?? 0,
+        errorType: w.Duration === 0 ? 'Omission' : 'None',
+        phonemes: (w.Phonemes ?? []).map((p) => ({
           phoneme: p.Phoneme,
-          accuracyScore: p.PronunciationAssessment?.AccuracyScore ?? 0,
+          accuracyScore: p.AccuracyScore ?? 0,
         })),
       })),
     });
   } catch (error) {
-    console.error('Assessment error:', error);
-    return NextResponse.json({ error: 'Failed to assess pronunciation' }, { status: 500 });
+    console.error('[assess] error:', error);
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }
 
 interface AzureWord {
   Word: string;
-  PronunciationAssessment?: { AccuracyScore: number; ErrorType: string };
+  AccuracyScore?: number;
+  Duration: number;
   Phonemes?: AzurePhoneme[];
 }
 
 interface AzurePhoneme {
   Phoneme: string;
-  PronunciationAssessment?: { AccuracyScore: number };
+  AccuracyScore?: number;
 }

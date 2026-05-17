@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import type { PronunciationResult, WordResult } from '@/lib/azure';
 
 interface ScoreDisplayProps {

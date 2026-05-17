@@ -50,7 +50,7 @@ export async function audioToWav(
   return bufferToWav(audioBuffer);
 }
 
-function resampleAudio(audioBuffer: AudioBuffer, newSampleRate: number): ArrayBuffer {
+async function resampleAudio(audioBuffer: AudioBuffer, newSampleRate: number): Promise<ArrayBuffer> {
   const offlineContext = new OfflineAudioContext(
     audioBuffer.numberOfChannels,
     Math.ceil(audioBuffer.duration * newSampleRate),
@@ -62,9 +62,8 @@ function resampleAudio(audioBuffer: AudioBuffer, newSampleRate: number): ArrayBu
   source.connect(offlineContext.destination);
   source.start();
 
-  return offlineContext.startRendering().then(renderedBuffer =>
-    bufferToWav(renderedBuffer)
-  );
+  const renderedBuffer = await offlineContext.startRendering();
+  return bufferToWav(renderedBuffer);
 }
 
 function bufferToWav(audioBuffer: AudioBuffer): ArrayBuffer {
