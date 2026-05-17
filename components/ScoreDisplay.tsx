@@ -23,27 +23,45 @@ function ScoreCircle({ label, score }: { label: string; score: number }) {
   );
 }
 
-function WordChip({
-  word,
-  onClick,
-}: {
-  word: WordResult;
-  onClick: () => void;
-}) {
-  const style =
-    word.errorType === 'None' || word.accuracyScore >= 80
-      ? 'bg-green-100 text-green-700 border-green-300 hover:bg-green-200'
-      : word.accuracyScore >= 60
-      ? 'bg-yellow-100 text-yellow-700 border-yellow-300 hover:bg-yellow-200'
-      : 'bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
+function phonemeColor(score: number) {
+  if (score >= 80) return 'bg-green-100 text-green-700 border-green-300';
+  if (score >= 60) return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+  return 'bg-red-100 text-red-700 border-red-300';
+}
+
+function WordChip({ word, onClick }: { word: WordResult; onClick: () => void }) {
+  const isOmitted = word.errorType === 'Omission';
+  const hasPhonemes = word.phonemes.length > 0;
 
   return (
     <button
       onClick={onClick}
-      className={`inline-block px-2 py-1 rounded border text-base font-medium transition-colors cursor-pointer ${style}`}
-      title={`Điểm: ${Math.round(word.accuracyScore)}`}
+      title="Click để xem chi tiết"
+      className="flex flex-col items-center gap-1 px-2 py-2 rounded-lg border border-gray-200 bg-white hover:border-blue-300 hover:shadow-sm transition-all cursor-pointer"
     >
-      {word.word}
+      {/* Word text */}
+      <span className={`text-sm font-semibold ${isOmitted ? 'line-through text-gray-400' : 'text-gray-700'}`}>
+        {word.word}
+      </span>
+
+      {/* Phoneme badges */}
+      {!isOmitted && hasPhonemes && (
+        <div className="flex flex-wrap justify-center gap-0.5">
+          {word.phonemes.map((p, i) => (
+            <span
+              key={i}
+              className={`text-[10px] font-mono px-1 rounded border ${phonemeColor(p.accuracyScore)}`}
+            >
+              {p.phoneme}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Omitted label */}
+      {isOmitted && (
+        <span className="text-[10px] text-red-400 font-medium">bỏ qua</span>
+      )}
     </button>
   );
 }
