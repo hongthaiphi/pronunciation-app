@@ -1,0 +1,61 @@
+{
+  "sentences": [
+    {
+      "id": 1,
+      "text": "Hello, how are you today?",
+      "level": "A1",
+      "category": "greeting",
+      "difficulty": 1
+    },
+    {
+      "id": 2,
+      "text": "My name is John and I live in Vietnam.",
+      "level": "A1",
+      "category": "introduction",
+      "difficulty": 1
+    },
+    {
+      "id": 3,
+      "text": "What is your favorite color?",
+      "level": "A1",
+      "category": "question",
+      "difficulty": 1
+    },
+    {
+      "id": 4,
+      "text": "The weather is beautiful today.",
+      "level": "A2",
+      "category": "weather",
+      "difficulty": 2
+    },
+    {
+      "id": 5,
+      "text": "I think that pronunciation is important for communication.",
+      "level": "B1",
+      "category": "opinion",
+      "difficulty": 3
+    },
+    {
+      "id": 6,
+      "text": "Could you please repeat that for me?",
+      "level": "A2",
+      "category": "request",
+      "difficulty": 2
+    },
+    {
+      "id": 7,
+      "text": "The third thing, therefore, requires consideration.",
+      "level": "C1",
+      "category": "formal",
+      "difficulty": 4,
+      "phonemes": ["θ", "ð", "r"]
+    },
+    {
+      "id": 8,
+      "text": "I appreciate your patience and understanding.",
+      "level": "B2",
+      "category": "gratitude",
+      "difficulty": 3
+    }
+  ]
+}
