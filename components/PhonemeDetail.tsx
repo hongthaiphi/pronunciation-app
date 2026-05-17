@@ -1,6 +1,7 @@
 'use client';
 
 import type { WordResult } from '@/lib/azure';
+import { toIPA } from '@/lib/phoneme';
 
 interface PhonemeDetailProps {
   word: WordResult | null;
@@ -10,8 +11,8 @@ interface PhonemeDetailProps {
 export default function PhonemeDetail({ word, onClose }: PhonemeDetailProps) {
   if (!word) return null;
 
-  const playNative = (phoneme: string) => {
-    const utterance = new SpeechSynthesisUtterance(phoneme);
+  const playNative = (azurePhoneme: string) => {
+    const utterance = new SpeechSynthesisUtterance(toIPA(azurePhoneme));
     utterance.lang = 'en-US';
     utterance.rate = 0.6;
     window.speechSynthesis.speak(utterance);
@@ -60,7 +61,7 @@ export default function PhonemeDetail({ word, onClose }: PhonemeDetailProps) {
                 className={`flex items-center justify-between p-3 rounded-lg border ${color}`}
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-lg font-bold">/{p.phoneme}/</span>
+                  <span className="font-mono text-lg font-bold">/{toIPA(p.phoneme)}/</span>
                   <div className="w-24 h-2 bg-white/60 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full bg-current opacity-60"

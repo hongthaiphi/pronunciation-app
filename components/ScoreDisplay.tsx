@@ -1,6 +1,7 @@
 'use client';
 
 import type { PronunciationResult, WordResult } from '@/lib/azure';
+import { toIPA } from '@/lib/phoneme';
 
 interface ScoreDisplayProps {
   result: PronunciationResult;
@@ -52,7 +53,7 @@ function WordChip({ word, onClick }: { word: WordResult; onClick: () => void }) 
               key={i}
               className={`text-[10px] font-mono px-1 rounded border ${phonemeColor(p.accuracyScore)}`}
             >
-              {p.phoneme}
+              {toIPA(p.phoneme)}
             </span>
           ))}
         </div>
