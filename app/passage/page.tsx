@@ -49,30 +49,17 @@ export default function PassagePage() {
     }
   };
 
-  const playWord = async (token: string) => {
+  const playWord = (token: string) => {
     const clean = token.replace(/[^a-zA-Z'-]/g, '');
-    if (!clean || playingWord) return;
+    if (!clean) return;
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(clean);
+    utt.lang = 'en-US';
+    utt.rate = 0.9;
     setPlayingWord(clean);
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: clean }),
-      });
-      if (!res.ok) throw new Error();
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audio.onended = () => { URL.revokeObjectURL(url); setPlayingWord(null); };
-      audio.onerror = () => setPlayingWord(null);
-      audio.play();
-    } catch {
-      window.speechSynthesis.cancel();
-      const utt = new SpeechSynthesisUtterance(clean);
-      utt.lang = 'en-US';
-      utt.onend = () => setPlayingWord(null);
-      window.speechSynthesis.speak(utt);
-    }
+    utt.onend = () => setPlayingWord(null);
+    utt.onerror = () => setPlayingWord(null);
+    window.speechSynthesis.speak(utt);
   };
 
   const handleRecordingComplete = async (blob: Blob) => {
