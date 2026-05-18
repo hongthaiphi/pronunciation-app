@@ -132,7 +132,7 @@ export default function PracticePage() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-sm text-blue-600 font-medium mb-1">Câu luyện tập:</p>
-              <p className="text-xl text-gray-800 font-medium">{referenceText}</p>
+              <p className="text-base sm:text-xl text-gray-800 font-medium">{referenceText}</p>
             </div>
 
             <div>
@@ -172,7 +172,7 @@ export default function PracticePage() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-sm text-blue-600 font-medium mb-1">Câu đã luyện:</p>
-              <p className="text-lg text-gray-800">{referenceText}</p>
+              <p className="text-base sm:text-lg text-gray-800">{referenceText}</p>
             </div>
 
             <ScoreDisplay result={result} onWordClick={setSelectedWord} />

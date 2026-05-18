@@ -16,10 +16,10 @@ function ScoreCircle({ label, score }: { label: string; score: number }) {
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <div className={`w-16 h-16 rounded-full border-4 ${ring} flex items-center justify-center`}>
-        <span className={`text-lg font-bold ${color}`}>{Math.round(score)}</span>
+      <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-full border-4 ${ring} flex items-center justify-center`}>
+        <span className={`text-sm sm:text-lg font-bold ${color}`}>{Math.round(score)}</span>
       </div>
-      <span className="text-xs text-gray-500 text-center leading-tight">{label}</span>
+      <span className="text-[10px] sm:text-xs text-gray-500 text-center leading-tight">{label}</span>
     </div>
   );
 }
@@ -97,7 +97,7 @@ export default function ScoreDisplay({ result, onWordClick }: ScoreDisplayProps)
       </div>
 
       {/* Sub-scores */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-1 sm:gap-4">
         <ScoreCircle label="Chính xác" score={result.accuracyScore} />
         <ScoreCircle label="Trôi chảy" score={result.fluencyScore} />
         <ScoreCircle label="Hoàn chỉnh" score={result.completenessScore} />
@@ -117,7 +117,7 @@ export default function ScoreDisplay({ result, onWordClick }: ScoreDisplayProps)
             ))}
           </div>
           {/* Legend */}
-          <div className="flex gap-4 mt-2 text-xs text-gray-400">
+          <div className="flex flex-wrap gap-2 sm:gap-4 mt-2 text-[10px] sm:text-xs text-gray-400">
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-sm bg-green-200 border border-green-300 inline-block" />
               Đúng (≥80)

@@ -24,7 +24,7 @@ export default function PhonemeDetail({ word, onClose }: PhonemeDetailProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6"
+        className="bg-white rounded-xl shadow-2xl max-w-sm w-full p-4 sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between mb-4">
@@ -62,7 +62,7 @@ export default function PhonemeDetail({ word, onClose }: PhonemeDetailProps) {
               >
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-lg font-bold">/{toIPA(p.phoneme)}/</span>
-                  <div className="w-24 h-2 bg-white/60 rounded-full overflow-hidden">
+                  <div className="w-16 sm:w-24 h-2 bg-white/60 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full bg-current opacity-60"
                       style={{ width: `${p.accuracyScore}%` }}
