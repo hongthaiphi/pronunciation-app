@@ -51,17 +51,23 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
           <a
             href="/practice"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-center"
           >
-            Bắt đầu Luyện tập
+            🎤 Luyện từng câu
+          </a>
+          <a
+            href="/passage"
+            className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition-colors text-center"
+          >
+            📖 Đọc đoạn văn
           </a>
         </div>
 
         <p className="mt-8 text-sm text-gray-500">
-          Powered by Azure Speech Service + Claude AI
+          Powered by Azure Speech Service + Gemini AI
         </p>
       </div>
     </div>

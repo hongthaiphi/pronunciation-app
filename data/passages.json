@@ -1,0 +1,28 @@
+{
+  "passages": [
+    {
+      "id": 1,
+      "title": "Morning Routine",
+      "level": "A2",
+      "text": "Every morning, I wake up early and make a cup of coffee. Then I check my phone for messages and read the news. After breakfast, I walk to the office and start working. I usually have lunch with my colleagues at a nearby restaurant."
+    },
+    {
+      "id": 2,
+      "title": "The Weather",
+      "level": "B1",
+      "text": "The weather in this country is quite unpredictable. Sometimes it rains heavily in the morning, but by the afternoon the sun comes out and everything looks beautiful. People here always carry an umbrella just in case the weather changes suddenly."
+    },
+    {
+      "id": 3,
+      "title": "Technology Today",
+      "level": "B2",
+      "text": "Technology has changed the way we communicate and work. With smartphones and the internet, people can connect with others around the world instantly. However, this constant connectivity can sometimes make it difficult to disconnect and enjoy quiet moments."
+    },
+    {
+      "id": 4,
+      "title": "Difficult Sounds",
+      "level": "B1",
+      "text": "The three brothers thought thoroughly through the thick theory. She sells seashells by the seashore. Whether the weather is fine or whether the weather is not, we shall have weather whatever the weather."
+    }
+  ]
+}
