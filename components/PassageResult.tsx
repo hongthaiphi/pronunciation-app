@@ -48,7 +48,6 @@ function WordToken({ word, onClick }: { word: WordResult; onClick: () => void })
 }
 
 export default function PassageResult({ result, onWordClick }: PassageResultProps) {
-  const total = result.words.length;
   const correct = result.words.filter((w) => w.accuracyScore >= 80).length;
   const fair = result.words.filter((w) => w.accuracyScore >= 60 && w.accuracyScore < 80).length;
   const wrong = result.words.filter((w) => w.accuracyScore < 60 && w.errorType !== 'Omission').length;
