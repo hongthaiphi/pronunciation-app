@@ -19,16 +19,35 @@ export default function PracticePage() {
   const [feedback, setFeedback] = useState('');
   const [selectedWord, setSelectedWord] = useState<WordResult | null>(null);
   const [error, setError] = useState('');
+  const [isTTSLoading, setIsTTSLoading] = useState(false);
 
   const referenceText = customText.trim() || selectedText;
 
-  const playNative = () => {
-    if (!referenceText) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(referenceText);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.85;
-    window.speechSynthesis.speak(utterance);
+  const playNative = async () => {
+    if (!referenceText || isTTSLoading) return;
+    setIsTTSLoading(true);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: referenceText }),
+      });
+      if (!res.ok) throw new Error('TTS failed');
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.onended = () => URL.revokeObjectURL(url);
+      audio.play();
+    } catch {
+      // fallback về browser TTS nếu Azure lỗi
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(referenceText);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.85;
+      window.speechSynthesis.speak(utterance);
+    } finally {
+      setIsTTSLoading(false);
+    }
   };
 
   const handleRecordingComplete = async (blob: Blob) => {
@@ -139,9 +158,20 @@ export default function PracticePage() {
               <h2 className="font-semibold text-gray-700 mb-3">Bước 1 — Nghe mẫu</h2>
               <button
                 onClick={playNative}
-                className="flex items-center gap-2 bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-4 rounded-lg transition-colors"
+                disabled={isTTSLoading}
+                className="flex items-center gap-2 bg-green-100 hover:bg-green-200 disabled:opacity-60 disabled:cursor-not-allowed text-green-700 font-medium py-2 px-4 rounded-lg transition-colors"
               >
-                🔊 Phát âm mẫu (native)
+                {isTTSLoading ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    Đang tải...
+                  </>
+                ) : (
+                  <>🔊 Phát âm mẫu (Jenny Neural)</>
+                )}
               </button>
             </div>
 
