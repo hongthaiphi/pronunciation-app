@@ -16,6 +16,7 @@ export default function PassagePage() {
   const [customText, setCustomText] = useState('');
   const [isAssessing, setIsAssessing] = useState(false);
   const [isTTSLoading, setIsTTSLoading] = useState(false);
+  const [playingWord, setPlayingWord] = useState<string | null>(null);
   const [result, setResult] = useState<PronunciationResult | null>(null);
   const [selectedWord, setSelectedWord] = useState<WordResult | null>(null);
   const [error, setError] = useState('');
@@ -45,6 +46,32 @@ export default function PassagePage() {
       window.speechSynthesis.speak(utt);
     } finally {
       setIsTTSLoading(false);
+    }
+  };
+
+  const playWord = async (token: string) => {
+    const clean = token.replace(/[^a-zA-Z'-]/g, '');
+    if (!clean || playingWord) return;
+    setPlayingWord(clean);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: clean }),
+      });
+      if (!res.ok) throw new Error();
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.onended = () => { URL.revokeObjectURL(url); setPlayingWord(null); };
+      audio.onerror = () => setPlayingWord(null);
+      audio.play();
+    } catch {
+      window.speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(clean);
+      utt.lang = 'en-US';
+      utt.onend = () => setPlayingWord(null);
+      window.speechSynthesis.speak(utt);
     }
   };
 
@@ -134,7 +161,28 @@ export default function PassagePage() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-xs text-blue-600 font-medium mb-2">Đoạn văn luyện tập:</p>
-              <p className="text-sm sm:text-base text-gray-800 leading-relaxed">{referenceText}</p>
+              <p className="text-sm sm:text-base text-gray-800 leading-loose">
+                {referenceText.split(/\s+/).filter(Boolean).map((token, i) => {
+                  const clean = token.replace(/[^a-zA-Z'-]/g, '');
+                  const isPlaying = playingWord === clean;
+                  return (
+                    <span
+                      key={i}
+                      onClick={() => playWord(token)}
+                      className={`rounded px-0.5 transition-colors select-none ${
+                        clean
+                          ? isPlaying
+                            ? 'bg-blue-500 text-white cursor-default'
+                            : 'hover:bg-blue-200 active:bg-blue-300 cursor-pointer'
+                          : ''
+                      }`}
+                    >
+                      {token}{' '}
+                    </span>
+                  );
+                })}
+              </p>
+              <p className="text-[11px] text-blue-400 mt-2">💡 Chạm vào từ để nghe phát âm</p>
             </div>
 
             <div>
@@ -183,7 +231,11 @@ export default function PassagePage() {
         {/* Step: Result */}
         {step === 'result' && result && (
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
-            <PassageResult result={result} onWordClick={setSelectedWord} />
+            <PassageResult
+              result={result}
+              onPlayWord={playWord}
+              onWordDetails={setSelectedWord}
+            />
 
             <div className="flex gap-3">
               <button

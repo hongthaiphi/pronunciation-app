@@ -5,7 +5,8 @@ import { toIPA } from '@/lib/phoneme';
 
 interface PassageResultProps {
   result: PronunciationResult;
-  onWordClick?: (word: WordResult) => void;
+  onPlayWord?: (word: string) => void;
+  onWordDetails?: (word: WordResult) => void;
 }
 
 type WordStatus = 'correct' | 'fair' | 'wrong' | 'omitted';
@@ -24,22 +25,34 @@ const STATUS_STYLE: Record<WordStatus, string> = {
   omitted: 'bg-red-100 text-red-400 line-through hover:bg-red-200',
 };
 
-function WordToken({ word, onClick }: { word: WordResult; onClick: () => void }) {
+function WordToken({
+  word,
+  onPlay,
+  onDetails,
+}: {
+  word: WordResult;
+  onPlay: () => void;
+  onDetails: () => void;
+}) {
   const status = getStatus(word);
   const isDifficult = status === 'fair' || status === 'wrong' || status === 'omitted';
   const ipa = word.phonemes.map((p) => toIPA(p.phoneme)).join('');
 
   return (
-    <span
-      className="inline-flex flex-col items-center mx-0.5 mb-2 cursor-pointer"
-      onClick={onClick}
-      title={`${word.word} — ${Math.round(word.accuracyScore)}/100 (click để xem chi tiết)`}
-    >
-      <span className={`px-1.5 py-0.5 rounded text-sm font-medium transition-colors ${STATUS_STYLE[status]}`}>
+    <span className="inline-flex flex-col items-center mx-0.5 mb-2">
+      <span
+        onClick={onPlay}
+        title={`Tap để nghe "${word.word}" — ${Math.round(word.accuracyScore)}/100`}
+        className={`px-1.5 py-0.5 rounded text-sm font-medium transition-colors cursor-pointer active:scale-95 ${STATUS_STYLE[status]}`}
+      >
         {word.word}
       </span>
       {isDifficult && ipa && (
-        <span className="text-[9px] text-gray-400 font-mono leading-none mt-0.5 select-none">
+        <span
+          onClick={onDetails}
+          title="Xem chi tiết phoneme"
+          className="text-[9px] text-blue-400 hover:text-blue-600 font-mono leading-none mt-0.5 cursor-pointer transition-colors"
+        >
           /{ipa}/
         </span>
       )}
@@ -47,7 +60,7 @@ function WordToken({ word, onClick }: { word: WordResult; onClick: () => void })
   );
 }
 
-export default function PassageResult({ result, onWordClick }: PassageResultProps) {
+export default function PassageResult({ result, onPlayWord, onWordDetails }: PassageResultProps) {
   const correct = result.words.filter((w) => w.accuracyScore >= 80).length;
   const fair = result.words.filter((w) => w.accuracyScore >= 60 && w.accuracyScore < 80).length;
   const wrong = result.words.filter((w) => w.accuracyScore < 60 && w.errorType !== 'Omission').length;
@@ -82,12 +95,17 @@ export default function PassageResult({ result, onWordClick }: PassageResultProp
       {/* Passage display */}
       <div>
         <p className="text-xs text-gray-400 mb-2">
-          Click vào từ để xem chi tiết phoneme — phiên âm hiển thị cho các từ cần cải thiện
+          Tap từ để nghe phát âm — tap <span className="font-mono text-blue-400">/ipa/</span> để xem chi tiết phoneme
         </p>
         <div className="bg-gray-50 rounded-lg p-4 leading-[2.5rem]">
           <div className="flex flex-wrap items-end">
             {result.words.map((w, i) => (
-              <WordToken key={i} word={w} onClick={() => onWordClick?.(w)} />
+              <WordToken
+                key={i}
+                word={w}
+                onPlay={() => onPlayWord?.(w.word)}
+                onDetails={() => onWordDetails?.(w)}
+              />
             ))}
           </div>
         </div>
