@@ -161,7 +161,7 @@ export default function PracticePage() {
                   .map((s) => (
                   <button
                     key={s.id}
-                    onClick={() => { setSelectedText(s.text); setCustomText(''); }}
+                    onClick={() => { setSelectedText(s.text); setCustomText(''); setStep('record'); }}
                     className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                       selectedText === s.text && !customText
                         ? 'border-blue-500 bg-blue-50'
