@@ -9,11 +9,33 @@ import type { PronunciationResult, WordResult } from '@/lib/azure';
 import { audioToWav } from '@/lib/audio';
 
 type Step = 'select' | 'record' | 'result';
+type Level = 'All' | 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
+
+const LEVELS: Level[] = ['All', 'A1', 'A2', 'B1', 'B2', 'C1'];
+
+const LEVEL_COLOR: Record<Level, string> = {
+  All: 'bg-gray-100 text-gray-700 border-gray-300',
+  A1:  'bg-green-100 text-green-700 border-green-300',
+  A2:  'bg-teal-100 text-teal-700 border-teal-300',
+  B1:  'bg-blue-100 text-blue-700 border-blue-300',
+  B2:  'bg-indigo-100 text-indigo-700 border-indigo-300',
+  C1:  'bg-purple-100 text-purple-700 border-purple-300',
+};
+
+const LEVEL_ACTIVE: Record<Level, string> = {
+  All: 'bg-gray-700 text-white border-gray-700',
+  A1:  'bg-green-600 text-white border-green-600',
+  A2:  'bg-teal-600 text-white border-teal-600',
+  B1:  'bg-blue-600 text-white border-blue-600',
+  B2:  'bg-indigo-600 text-white border-indigo-600',
+  C1:  'bg-purple-600 text-white border-purple-600',
+};
 
 export default function PracticePage() {
   const [step, setStep] = useState<Step>('select');
   const [selectedText, setSelectedText] = useState('');
   const [customText, setCustomText] = useState('');
+  const [activeLevel, setActiveLevel] = useState<Level>('All');
   const [isAssessing, setIsAssessing] = useState(false);
   const [result, setResult] = useState<PronunciationResult | null>(null);
   const [feedback, setFeedback] = useState('');
@@ -107,8 +129,36 @@ export default function PracticePage() {
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
             <div>
               <h2 className="font-semibold text-gray-700 mb-3">Chọn câu từ thư viện</h2>
-              <div className="space-y-2">
-                {sentences.sentences.map((s) => (
+
+              {/* Level filter tabs */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {LEVELS.map((level) => {
+                  const count = level === 'All'
+                    ? sentences.sentences.length
+                    : sentences.sentences.filter(s => s.level === level).length;
+                  const isActive = activeLevel === level;
+                  return (
+                    <button
+                      key={level}
+                      onClick={() => { setActiveLevel(level); setSelectedText(''); }}
+                      className={`px-3 py-1.5 rounded-full border text-sm font-medium transition-colors ${
+                        isActive ? LEVEL_ACTIVE[level] : LEVEL_COLOR[level] + ' hover:opacity-80'
+                      }`}
+                    >
+                      {level}
+                      <span className={`ml-1.5 text-xs ${isActive ? 'opacity-80' : 'opacity-60'}`}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Sentence list */}
+              <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+                {sentences.sentences
+                  .filter(s => activeLevel === 'All' || s.level === activeLevel)
+                  .map((s) => (
                   <button
                     key={s.id}
                     onClick={() => { setSelectedText(s.text); setCustomText(''); }}
@@ -118,8 +168,19 @@ export default function PracticePage() {
                         : 'border-gray-200 hover:border-blue-300'
                     }`}
                   >
-                    <span className="text-gray-800">{s.text}</span>
-                    <span className="ml-2 text-xs text-gray-400 font-mono">[{s.level}]</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <span className="text-gray-800 text-sm">{s.text}</span>
+                      <div className="flex items-center gap-1 shrink-0 mt-0.5">
+                        {s.focus && s.focus.length > 0 && s.focus.map((ph: string) => (
+                          <span key={ph} className="text-[10px] font-mono bg-orange-100 text-orange-600 border border-orange-200 px-1 rounded">
+                            /{ph}/
+                          </span>
+                        ))}
+                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${LEVEL_COLOR[s.level as Level]}`}>
+                          {s.level}
+                        </span>
+                      </div>
+                    </div>
                   </button>
                 ))}
               </div>
