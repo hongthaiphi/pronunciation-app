@@ -22,8 +22,6 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
   const animFrameRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  const MAX_DURATION = 30;
-
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current?.state !== 'inactive') {
       mediaRecorderRef.current?.stop();
@@ -80,7 +78,6 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
       timerRef.current = setInterval(() => {
         secs++;
         setDuration(secs);
-        if (secs >= MAX_DURATION) stopRecording();
       }, 1000);
     } catch {
       alert('Không thể truy cập microphone. Kiểm tra quyền truy cập của trình duyệt.');
@@ -110,7 +107,6 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
               style={{ width: `${volume}%` }}
             />
           </div>
-          <span className="text-xs text-gray-400 shrink-0">{MAX_DURATION - duration}s</span>
         </div>
       )}
 
@@ -135,7 +131,7 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <rect x="6" y="6" width="12" height="12" rx="2"/>
           </svg>
-          Dừng lại
+          Dừng ({duration}s)
         </button>
       )}
 
