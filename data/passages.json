@@ -6,7 +6,7 @@
       "level": "A1",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?family,home,happy",
+      "image": "https://picsum.photos/seed/family/800/400",
       "text": "I have a small family. My father works at a school. My mother cooks every day. I have one sister. We are very happy."
     },
     {
@@ -15,7 +15,7 @@
       "level": "A1",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?cat,pet,cute",
+      "image": "https://picsum.photos/seed/kitten/800/400",
       "text": "I have a cat. Her name is Mimi. She is white and small. She likes to sleep and eat fish. I love my cat very much."
     },
     {
@@ -24,7 +24,7 @@
       "level": "A1",
       "category": "school",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?school,classroom,children",
+      "image": "https://picsum.photos/seed/classroom/800/400",
       "text": "I go to school at seven. I study math, English, and science. I eat lunch at school with my friends. School ends at four. I go home by bus."
     },
     {
@@ -33,7 +33,7 @@
       "level": "A1",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?bedroom,cozy,interior",
+      "image": "https://picsum.photos/seed/bedroom/800/400",
       "text": "My room is small but nice. I have a bed, a desk, and a chair. There are books on my desk. I study and sleep in my room. I like my room."
     },
     {
@@ -42,17 +42,16 @@
       "level": "A1",
       "category": "hobby",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?park,bicycle,weekend",
+      "image": "https://picsum.photos/seed/bicycle/800/400",
       "text": "On weekends, I play with my friends. We go to the park and ride bikes. Sometimes we play football. In the evening, I watch TV with my family. Weekends are my favorite."
     },
-
     {
       "id": 6,
       "title": "Morning Routine",
       "level": "A2",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?morning,coffee,breakfast",
+      "image": "https://picsum.photos/seed/morning/800/400",
       "text": "Every morning, I wake up early and make a cup of coffee. Then I check my phone for messages and read the news. After breakfast, I walk to the office and start working. I usually have lunch with my colleagues at a nearby restaurant."
     },
     {
@@ -61,7 +60,7 @@
       "level": "A2",
       "category": "food",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?noodles,food,bowl",
+      "image": "https://picsum.photos/seed/noodles/800/400",
       "text": "I love Vietnamese food, especially pho and banh mi. Pho is a warm noodle soup with fresh herbs. Banh mi is a crispy bread filled with meat and vegetables. I eat these dishes at least twice a week. They are delicious and not expensive."
     },
     {
@@ -70,7 +69,7 @@
       "level": "A2",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?market,vegetables,fresh",
+      "image": "https://picsum.photos/seed/market/800/400",
       "text": "Yesterday, I went to the market with my mother. We bought vegetables, fruit, and some fresh fish. The market was very busy and noisy. My mother always finds the best prices. We came home and cooked a big dinner together."
     },
     {
@@ -79,7 +78,7 @@
       "level": "A2",
       "category": "school",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?study,books,learning",
+      "image": "https://picsum.photos/seed/studying/800/400",
       "text": "I started learning English two years ago. I study with a teacher on weekdays and watch English videos online. At first it was difficult, but now I can understand many things. I want to travel to England one day and speak with real people."
     },
     {
@@ -88,17 +87,16 @@
       "level": "A2",
       "category": "daily",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?street,neighborhood,city",
+      "image": "https://picsum.photos/seed/street/800/400",
       "text": "I live in a small neighborhood near the center of the city. There are many shops, restaurants, and a small park nearby. My neighbors are friendly and we often say hello. In the evenings, families sit outside and children play in the street. I really enjoy living here."
     },
-
     {
       "id": 11,
       "title": "The Weather",
       "level": "B1",
       "category": "weather",
       "focus": ["θ", "ð"],
-      "image": "https://source.unsplash.com/800x500/?rain,umbrella,weather",
+      "image": "https://picsum.photos/seed/rainy/800/400",
       "text": "The weather in this country is quite unpredictable. Sometimes it rains heavily in the morning, but by the afternoon the sun comes out and everything looks beautiful. People here always carry an umbrella just in case the weather changes suddenly. This makes planning outdoor activities rather challenging."
     },
     {
@@ -107,7 +105,7 @@
       "level": "B1",
       "category": "technology",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?phone,social-media,screen",
+      "image": "https://picsum.photos/seed/smartphone/800/400",
       "text": "Many people today spend several hours a day on social media. It helps us stay connected with friends and family who live far away. However, spending too much time scrolling through feeds can affect our productivity. It is important to set limits and take regular breaks from our screens."
     },
     {
@@ -116,7 +114,7 @@
       "level": "B1",
       "category": "health",
       "focus": ["θ"],
-      "image": "https://source.unsplash.com/800x500/?exercise,running,health",
+      "image": "https://picsum.photos/seed/running/800/400",
       "text": "Doctors think that regular exercise and a balanced diet are the keys to good health. People who exercise three times a week feel stronger and sleep better. Eating fresh vegetables and drinking enough water are also very important. Small changes in daily habits can make a big difference over time."
     },
     {
@@ -125,7 +123,7 @@
       "level": "B1",
       "category": "work",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?home-office,laptop,remote",
+      "image": "https://picsum.photos/seed/homeoffice/800/400",
       "text": "Since the pandemic, many companies have allowed employees to work from home. This arrangement saves time on commuting and offers more flexibility. However, working from home can be isolating, and some people find it hard to separate their work and personal life. A dedicated workspace at home can help improve focus and productivity."
     },
     {
@@ -134,17 +132,16 @@
       "level": "B1",
       "category": "phoneme drill",
       "focus": ["θ", "ð", "s", "ʃ"],
-      "image": "https://source.unsplash.com/800x500/?speaking,language,mouth",
+      "image": "https://picsum.photos/seed/speaking/800/400",
       "text": "The three brothers thought thoroughly through the thick theory. She sells seashells by the seashore. Whether the weather is fine or whether the weather is not, we shall have weather whatever the weather. These challenging phrases help train the tongue for tricky English sounds."
     },
-
     {
       "id": 16,
       "title": "Technology Today",
       "level": "B2",
       "category": "technology",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?technology,smartphone,digital",
+      "image": "https://picsum.photos/seed/technology/800/400",
       "text": "Technology has fundamentally changed the way we communicate and work. With smartphones and the internet, people can connect with others around the world instantly. However, this constant connectivity can make it difficult to disconnect and enjoy quiet moments. Experts suggest that setting boundaries with technology is essential for maintaining mental well-being."
     },
     {
@@ -153,7 +150,7 @@
       "level": "B2",
       "category": "environment",
       "focus": ["θ"],
-      "image": "https://source.unsplash.com/800x500/?glacier,climate,environment",
+      "image": "https://picsum.photos/seed/glacier/800/400",
       "text": "Climate change is one of the most pressing issues facing humanity today. Rising temperatures are causing glaciers to melt, sea levels to rise, and extreme weather events to become more frequent. Addressing this challenge requires coordinated global action, including transitioning to renewable energy sources and reducing carbon emissions. Without significant changes, the consequences for future generations could be severe."
     },
     {
@@ -162,7 +159,7 @@
       "level": "B2",
       "category": "culture",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?reading,books,library",
+      "image": "https://picsum.photos/seed/library/800/400",
       "text": "Despite the rise of digital media, reading books remains one of the most effective ways to develop knowledge and empathy. Research consistently shows that regular readers have stronger analytical skills and a broader vocabulary. Fiction, in particular, allows readers to experience perspectives very different from their own. In a world full of distractions, making time for reading is a worthwhile investment."
     },
     {
@@ -171,7 +168,7 @@
       "level": "B2",
       "category": "social",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?city,countryside,landscape",
+      "image": "https://picsum.photos/seed/countryside/800/400",
       "text": "The debate between urban and rural living involves trade-offs that vary greatly depending on personal values and circumstances. Cities offer greater economic opportunities, cultural diversity, and access to services. Rural areas, on the other hand, tend to provide a quieter pace of life, stronger community bonds, and a closer connection to nature. Neither lifestyle is inherently superior, and many people choose to incorporate elements of both."
     },
     {
@@ -180,17 +177,16 @@
       "level": "B2",
       "category": "health",
       "focus": ["θ"],
-      "image": "https://source.unsplash.com/800x500/?sleep,bedroom,night",
+      "image": "https://picsum.photos/seed/sleepnight/800/400",
       "text": "Scientists have long recognized that sleep plays a crucial role in physical and mental health. During sleep, the brain consolidates memories, the body repairs tissues, and the immune system strengthens. Chronic sleep deprivation has been linked to a range of health issues, including obesity, anxiety, and impaired cognitive function. Despite knowing this, many people continue to sacrifice sleep in favor of work or entertainment."
     },
-
     {
       "id": 21,
       "title": "The Ethics of Artificial Intelligence",
       "level": "C1",
       "category": "technology",
       "focus": ["θ", "ð"],
-      "image": "https://source.unsplash.com/800x500/?artificial-intelligence,robot,future",
+      "image": "https://picsum.photos/seed/artificial/800/400",
       "text": "The rapid advancement of artificial intelligence raises profound ethical questions that society has yet to fully address. As AI systems become more capable of autonomous decision-making, concerns about accountability, bias, and privacy are intensifying. Philosophers and technologists alike argue that the development of ethical frameworks must keep pace with technological progress. Without thoughtful governance, the benefits of AI risk being outweighed by significant social harms."
     },
     {
@@ -199,7 +195,7 @@
       "level": "C1",
       "category": "culture",
       "focus": ["θ", "ð"],
-      "image": "https://source.unsplash.com/800x500/?language,culture,diverse",
+      "image": "https://picsum.photos/seed/diversity/800/400",
       "text": "The relationship between language and identity is both complex and deeply personal. Linguists have theorized that the language we speak shapes the way we perceive the world, a hypothesis known as linguistic relativity. For many people, their mother tongue is inextricably linked to their cultural heritage and sense of self. When a language disappears, therefore, it represents not merely a loss of words, but an entire worldview and collective memory."
     },
     {
@@ -208,7 +204,7 @@
       "level": "C1",
       "category": "social",
       "focus": [],
-      "image": "https://source.unsplash.com/800x500/?economy,inequality,city",
+      "image": "https://picsum.photos/seed/economy/800/400",
       "text": "Growing economic inequality represents one of the defining challenges of the twenty-first century. While globalization and technological advancement have generated unprecedented wealth, the distribution of that wealth has become increasingly skewed. Economists debate whether market mechanisms alone can address this disparity, or whether structural interventions such as progressive taxation and universal basic income are necessary. The implications of inaction extend beyond economics to social cohesion and democratic stability."
     },
     {
@@ -217,7 +213,7 @@
       "level": "C1",
       "category": "academic",
       "focus": ["θ", "ð"],
-      "image": "https://source.unsplash.com/800x500/?nostalgia,memory,vintage",
+      "image": "https://picsum.photos/seed/nostalgia/800/400",
       "text": "Memory is not a passive recording of experience but an active, reconstructive process subject to distortion and revision. Neuroscientists have demonstrated that each time we recall a memory, we subtly alter it, incorporating new information and emotional states. This malleability has significant implications for the reliability of eyewitness testimony in legal proceedings. Furthermore, it raises philosophical questions about the nature of personal identity and whether the self we remember is truly the same as the self we once were."
     },
     {
@@ -226,7 +222,7 @@
       "level": "C1",
       "category": "environment",
       "focus": ["θ"],
-      "image": "https://source.unsplash.com/800x500/?forest,wildlife,nature",
+      "image": "https://picsum.photos/seed/forestwild/800/400",
       "text": "The alarming rate of biodiversity loss threatens the stability of ecosystems upon which all life depends. Thousands of species are disappearing each year as a result of habitat destruction, pollution, and climate change. Ecologists warn that the collapse of biodiversity undermines the natural services that ecosystems provide, including water purification, pollination, and carbon sequestration. Addressing this crisis demands not only conservation efforts but a fundamental rethinking of our relationship with the natural world."
     }
   ]
