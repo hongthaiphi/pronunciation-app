@@ -34,6 +34,7 @@ const LEVEL_ACTIVE: Record<Level, string> = {
 export default function PassagePage() {
   const [step, setStep] = useState<Step>('select');
   const [selectedText, setSelectedText] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
   const [customText, setCustomText] = useState('');
   const [activeLevel, setActiveLevel] = useState<Level>('All');
   const [isAssessing, setIsAssessing] = useState(false);
@@ -105,7 +106,7 @@ export default function PassagePage() {
     }
   };
 
-  const reset = () => { setStep('select'); setResult(null); setError(''); };
+  const reset = () => { setStep('select'); setResult(null); setError(''); setSelectedImage(''); };
 
   return (
     <div className="min-h-screen p-4 sm:p-8">
@@ -155,27 +156,39 @@ export default function PassagePage() {
                   .map((p) => (
                     <button
                       key={p.id}
-                      onClick={() => { setSelectedText(p.text); setCustomText(''); setStep('record'); }}
+                      onClick={() => { setSelectedText(p.text); setSelectedImage((p as {image?: string}).image || ''); setCustomText(''); setStep('record'); }}
                       className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                         selectedText === p.text && !customText
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-blue-300'
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <span className="font-medium text-gray-800 text-sm">{p.title}</span>
-                        <div className="flex items-center gap-1 shrink-0">
-                          {p.focus && p.focus.length > 0 && p.focus.map((ph: string) => (
-                            <span key={ph} className="text-[10px] font-mono bg-orange-100 text-orange-600 border border-orange-200 px-1 rounded">
-                              /{ph}/
-                            </span>
-                          ))}
-                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${LEVEL_COLOR[p.level as Level]}`}>
-                            {p.level}
-                          </span>
+                      <div className="flex items-start gap-3">
+                        {(p as {image?: string}).image && (
+                          <img
+                            src={(p as {image?: string}).image}
+                            alt={p.title}
+                            className="w-16 h-12 object-cover rounded shrink-0"
+                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                          />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <span className="font-medium text-gray-800 text-sm">{p.title}</span>
+                            <div className="flex items-center gap-1 shrink-0">
+                              {p.focus && p.focus.length > 0 && p.focus.map((ph: string) => (
+                                <span key={ph} className="text-[10px] font-mono bg-orange-100 text-orange-600 border border-orange-200 px-1 rounded">
+                                  /{ph}/
+                                </span>
+                              ))}
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${LEVEL_COLOR[p.level as Level]}`}>
+                                {p.level}
+                              </span>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-500 line-clamp-2">{p.text}</p>
                         </div>
                       </div>
-                      <p className="text-xs text-gray-500 line-clamp-2">{p.text}</p>
                     </button>
                   ))}
               </div>
@@ -205,6 +218,14 @@ export default function PassagePage() {
         {/* Step: Record */}
         {step === 'record' && (
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt="illustration"
+                className="w-full h-44 sm:h-52 object-cover rounded-xl"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+            )}
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-xs text-blue-600 font-medium mb-2">Đoạn văn luyện tập:</p>
               <p className="text-sm sm:text-base text-gray-800 leading-loose">

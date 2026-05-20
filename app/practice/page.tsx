@@ -34,6 +34,7 @@ const LEVEL_ACTIVE: Record<Level, string> = {
 export default function PracticePage() {
   const [step, setStep] = useState<Step>('select');
   const [selectedText, setSelectedText] = useState('');
+  const [selectedImage, setSelectedImage] = useState('');
   const [customText, setCustomText] = useState('');
   const [activeLevel, setActiveLevel] = useState<Level>('All');
   const [isAssessing, setIsAssessing] = useState(false);
@@ -111,6 +112,7 @@ export default function PracticePage() {
     setResult(null);
     setFeedback('');
     setError('');
+    setSelectedImage('');
   };
 
   return (
@@ -161,24 +163,36 @@ export default function PracticePage() {
                   .map((s) => (
                   <button
                     key={s.id}
-                    onClick={() => { setSelectedText(s.text); setCustomText(''); setStep('record'); }}
+                    onClick={() => { setSelectedText(s.text); setSelectedImage((s as {image?: string}).image || ''); setCustomText(''); setStep('record'); }}
                     className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                       selectedText === s.text && !customText
                         ? 'border-blue-500 bg-blue-50'
                         : 'border-gray-200 hover:border-blue-300'
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-gray-800 text-sm">{s.text}</span>
-                      <div className="flex items-center gap-1 shrink-0 mt-0.5">
-                        {s.focus && s.focus.length > 0 && s.focus.map((ph: string) => (
-                          <span key={ph} className="text-[10px] font-mono bg-orange-100 text-orange-600 border border-orange-200 px-1 rounded">
-                            /{ph}/
-                          </span>
-                        ))}
-                        <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${LEVEL_COLOR[s.level as Level]}`}>
-                          {s.level}
-                        </span>
+                    <div className="flex items-start gap-3">
+                      {(s as {image?: string}).image && (
+                        <img
+                          src={(s as {image?: string}).image}
+                          alt=""
+                          className="w-14 h-10 object-cover rounded shrink-0 mt-0.5"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <span className="text-gray-800 text-sm">{s.text}</span>
+                          <div className="flex items-center gap-1 shrink-0 mt-0.5">
+                            {s.focus && s.focus.length > 0 && s.focus.map((ph: string) => (
+                              <span key={ph} className="text-[10px] font-mono bg-orange-100 text-orange-600 border border-orange-200 px-1 rounded">
+                                /{ph}/
+                              </span>
+                            ))}
+                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${LEVEL_COLOR[s.level as Level]}`}>
+                              {s.level}
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </button>
@@ -210,6 +224,14 @@ export default function PracticePage() {
         {/* Step: Record */}
         {step === 'record' && (
           <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt="illustration"
+                className="w-full h-36 sm:h-44 object-cover rounded-xl"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+            )}
             <div className="bg-blue-50 rounded-lg p-4">
               <p className="text-sm text-blue-600 font-medium mb-1">Câu luyện tập:</p>
               <p className="text-base sm:text-xl text-gray-800 font-medium">{referenceText}</p>
