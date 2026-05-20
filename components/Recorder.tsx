@@ -43,7 +43,6 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
       setAudioUrl(null);
       setDuration(0);
 
-      // Volume analyser
       const audioContext = new AudioContext();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
@@ -97,55 +96,54 @@ export default function Recorder({ onRecordingComplete, disabled = false }: Reco
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Volume meter */}
       {state === 'recording' && (
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-red-500 font-medium animate-pulse">● REC</span>
-          <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="flex items-center gap-3">
+          <span className="flex items-center gap-1.5 text-sm text-red-500 font-semibold shrink-0">
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+            REC {duration}s
+          </span>
+          <div className="flex-1 h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-red-500 transition-all duration-75 rounded-full"
+              className="h-full bg-gradient-to-r from-red-400 to-rose-500 transition-all duration-75 rounded-full"
               style={{ width: `${volume}%` }}
             />
           </div>
-          <span className="text-sm text-gray-500 w-10 text-right">
-            {duration}s
-          </span>
+          <span className="text-xs text-gray-400 shrink-0">{MAX_DURATION - duration}s</span>
         </div>
       )}
 
       {/* Controls */}
-      <div className="flex gap-3">
-        {state !== 'recording' ? (
-          <button
-            onClick={startRecording}
-            disabled={disabled}
-            className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-              <path d="M19 10v2a7 7 0 0 1-14 0v-2H3v2a9 9 0 0 0 8 8.94V23h2v-2.06A9 9 0 0 0 21 12v-2h-2z"/>
-            </svg>
-            {state === 'stopped' ? 'Ghi âm lại' : 'Bắt đầu Ghi âm'}
-          </button>
-        ) : (
-          <button
-            onClick={stopRecording}
-            className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <rect x="6" y="6" width="12" height="12" rx="1"/>
-            </svg>
-            Dừng ({MAX_DURATION - duration}s còn lại)
-          </button>
-        )}
-      </div>
+      {state !== 'recording' ? (
+        <button
+          onClick={startRecording}
+          disabled={disabled}
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-sm"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2H3v2a9 9 0 0 0 8 8.94V23h2v-2.06A9 9 0 0 0 21 12v-2h-2z"/>
+          </svg>
+          {state === 'stopped' ? 'Ghi âm lại' : 'Bắt đầu Ghi âm'}
+        </button>
+      ) : (
+        <button
+          onClick={stopRecording}
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-sm"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <rect x="6" y="6" width="12" height="12" rx="2"/>
+          </svg>
+          Dừng lại
+        </button>
+      )}
 
       {/* Playback */}
       {audioUrl && (
-        <div className="bg-gray-50 rounded-lg p-3">
-          <p className="text-sm text-gray-500 mb-2">Nghe lại bản ghi âm của bạn:</p>
-          <audio controls src={audioUrl} className="w-full h-10" />
+        <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+          <p className="text-xs text-gray-500 mb-2 font-medium">Nghe lại bản ghi âm:</p>
+          <audio controls src={audioUrl} className="w-full h-9" />
         </div>
       )}
     </div>
